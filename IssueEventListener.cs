@@ -50,15 +50,15 @@ namespace Webhooks
 
         public override void AfterCreateFull(IssueDtoEventArgs args)
         {
-            CallWebhook(GetData(args.Context, true, false), args.Issue);
+            CallWebhook(GetData(args.Context, true, false), args.Issue, null);
         }
 
         public override void AfterUpdateFull(IssueDtoEventArgs args)
         {
-            CallWebhook(GetData(args.Context, false, true), args.Issue);
+            CallWebhook(GetData(args.Context, false, true), args.Issue, args.Previous);
         }
 
-        private string GetIssueJson(IssueDto data)
+        private string GetIssueJson(object data)
         {
             Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
             serializer.Converters.Add(new Newtonsoft.Json.Converters.IsoDateTimeConverter());
@@ -72,10 +72,11 @@ namespace Webhooks
             }
         }
 
-        private void CallWebhook(List<WebhooksData> urls, IssueDto data)
+        private void CallWebhook(List<WebhooksData> urls, IssueDto data, IssueDto previous)
         {
             WebClient client = new WebClient();
-            var json = GetIssueJson(data);
+            var payload = new { Issue = data, Previous = previous };
+            var json = GetIssueJson(payload);
 
             foreach (var url in urls)
             {
