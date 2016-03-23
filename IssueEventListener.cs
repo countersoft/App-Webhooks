@@ -76,6 +76,8 @@ namespace Webhooks
         {
             WebClient client = new WebClient();
             var payload = new { Issue = data, Previous = previous };
+            payload.Issue.Entity = new Countersoft.Gemini.Commons.Entity.Issue(payload.Issue.Entity); // Make sure the json doesn't do a REF to the base entity.
+            payload.Previous.Entity = new Countersoft.Gemini.Commons.Entity.Issue(payload.Previous.Entity);
             var json = GetIssueJson(payload);
 
             foreach (var url in urls)
