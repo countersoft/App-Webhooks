@@ -3,7 +3,7 @@
     <name>Webhooks</name>
     <description>Webhooks</description>
     <version-major>1</version-major>
-    <version-minor>0</version-minor>
+    <version-minor>1</version-minor>
     <version-patch>4</version-patch>
     <publisher>Countersoft</publisher>
     <released>2015-03-18T11:31:00Z</released>
